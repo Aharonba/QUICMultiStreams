@@ -1,89 +1,72 @@
-# QUIC Multi-Streams Project
 
-This project implements the multi streams aspect of QUIC protocol in Python.
-The project was made as part of Computer Networks course at Ariel University.
-The assignment's guidelines can be found [here](project_guidelines.pdf), and the outcome of the project can be found [here](project_outcome.pdf).
-## Table of Contents
-- [Project Structure](#project-structure)
-- [Project Details](#project-details)
-  - [QUIC_CONNECTION class](#quic_connection-class)
-  - [QUIC_PACKET and QUIC_FRAME classes](#quic_packet-and-quic_frame-classes)
-- [Usage](#usage)
-  - [Running the Receiver](#running-the-receiver)
-  - [Running the Sender](#running-the-sender)
-  - [Running the Tests](#running-the-tests)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Contributing](#contributing)
+# 🌐 QUIC Multi-Stream Protocol Simulation | Python
 
-## Project Structure
+## 📌 Overview
 
-- `QUIC.py`: Contains the main implementation of the QUIC protocol, including connection management, packet handling, and data transmission.
-- `receiver.py`: Script to run the receiver that listens for incoming connections and receives data.
-- `sender.py`: Script to run the sender that connects to the receiver and sends data.
-- `QUIC_TEST.py`: Contains test cases to verify the functionality of the QUIC protocol implementation.
+A simplified simulation of the **QUIC (Quick UDP Internet Connections)** protocol built in Python, with support for multiple bidirectional streams over a single UDP connection. This project demonstrates core networking concepts such as **reliable data transfer**, **packet/frame abstraction**, **stream multiplexing**, and **asynchronous I/O** using `asyncio`.
 
-## Project Details
+---
 
-### QUIC_CONNECTION class
+## 🚀 Key Features
 
-The `QUIC_CONNECTION` class is responsible for managing the connection between the sender and the receiver. It handles the following:
-- Establishing connections (connect_to and listen_to methods)
-- Sending data (send_data and send_to_streams methods)
-- Receiving data (receive_data method)
-- Terminating connections (terminate_connection and end_communication methods)
+- **📦 QUIC-like Multi-Stream Support**  
+  Simulates parallel data streams over a shared UDP socket, closely modeling the stream multiplexing behavior in QUIC.
 
-### QUIC_PACKET and QUIC_FRAME classes
-- `QUIC_PACKET`: Represents a packet in the QUIC protocol, including serialization and deserialization methods.
-- `QUIC_FRAME`: Represents a frame within a QUIC packet, including stream ID, position, and data.
+- **⚙️ Asynchronous Programming**  
+  Built with `asyncio` to handle concurrent sending and receiving of packets with minimal blocking.
 
-## Usage
+- **🧩 Custom Frame & Packet Design**  
+  Implements a flexible serialization format to structure stream frames, headers, and acknowledgments.
 
-### Running the Receiver
+- **🔁 Flow Control & Reliability**  
+  Supports data fragmentation, reassembly, acknowledgment handling, and delivery guarantees over UDP.
 
-To start the receiver, run the following command:
-```sh
-python receiver.py
+- **🔬 Testable Architecture**  
+  A test suite simulates realistic scenarios of sender-receiver communication, including out-of-order packets and multi-stream interleaving.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Python 3.11+**
+- **asyncio** – event loop and coroutines  
+- **socket / UDP networking**  
+- **Custom frame/packet protocol**  
+- **Testing** – Manual test harness (`QUIC_TEST.py`)
+
+---
+
+## 📂 Project Structure
+
 ```
-The receiver will listen for incoming connections on 0.0.0.0:9191. 
-
-### Running the Sender
-
-```aiignore
-python sender.py
-```
-The sender will connect to the receiver at 127.0.0.1:9191 and send the contents of random_data_file.txt over 3 streams.
-
-### Running the Tests
-
-To run the test , execute the following command:
-```sh
-python QUIC_TEST.py
+├── QUIC.py             → Core QUIC-like logic
+├── sender.py           → Stream sender over UDP
+├── receiver.py         → Stream receiver with frame tracking
+├── QUIC_TEST.py        → Test harness for stream simulation
+├── generate_data_file.py → Utility to generate data for tests
 ```
 
-It will run the test which simulates a connection between a sender and a receiver, sending data over multiple streams and verifying that the data received by the receiver, is the same as the data that was sent by the sender, making sure that the deserialization and serialization of the data conducted successfully.
+---
 
+## 🧪 Example Usage
 
-## Requirements
+Run a receiver on one terminal:
 
-- Python 3.7+
-- `asyncio` module
+```bash
+python3 receiver.py
+```
 
-## Installation
+Send a multi-streamed file from another terminal:
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/benami171/QUIC_Multi_Streams.git
-    cd QUIC_Multi_Streams
-    ```
+```bash
+python3 sender.py
+```
 
-2. Ensure you have Python 3.7+ installed.
+Or run the main test simulation:
 
-## Authors
-- [Gal Ben Ami](https://github.com/benami171)
-- [Elroei Carmel](https://github.com/ElroiCarmel)
-- [Aharon Basous](https://github.com/Aharonba)
-- [Gidi Rabi](https://github.com/GidiRabi)
+```bash
+python3 QUIC_TEST.py
+```
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+---
+
